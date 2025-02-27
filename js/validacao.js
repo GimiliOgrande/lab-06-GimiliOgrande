@@ -54,13 +54,46 @@ const mensagensDeErro = {
     },
     estado: {
         valueMissing: 'O campo de estado não pode estar vazio.'
+    },
+    telefone: {
+        valueMissing: 'o campo de estado não pode estar vazio.'
     }
 }
 
 const validadores = {
     dataNascimento:input => validaDataNascimento(input),
     cpf:input => validaCPF(input),
-    cep:input => recuperarCEP(input)
+    cep:input => recuperarCEP(input),
+    telefone:input => validaTelefone(input),
+    instagram:input => validaInsta(input)
+
+}
+
+function validaInsta(input){
+    const instaRecebido = document.getElementById('instagram').value;
+
+    let mensagem = ''
+    if(instaRecebido.substr(0, 1) != '@'){
+        mensagem = 'Instagram inválido'
+    }
+
+    input.setCustomValidity(mensagem)
+}
+
+function validaTelefone(input){
+    const telefoneTag = document.getElementById('telefone').value;
+    const telefoneRecebido = telefoneTag.value.replace(/\D/g, '');
+
+    let mensagem = ''
+    if(telefoneRecebido.length < 10 & telefoneRecebido.length > 11){
+        mensagem = 'Telefone inválido'
+    }
+
+    if(parseInt(telefoneRecebido.substring(0, 1)) < 11 & parseInt(telefoneRecebido.substring(0, 1)) > 99){
+        mensagem = 'Telefone inválido'
+    }
+
+    input.setCustomValidity(mensagem)
 }
 
 function mostraMensagemDeErro(tipoDeInput, input) {
